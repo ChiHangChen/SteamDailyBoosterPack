@@ -32,7 +32,7 @@ Paste the game id that you want to generate booster pack, in the example `config
 game_id = [292030, 1091500]
 ```
 
-`292030` is The Witcher 3, and `1091500` is Cyberpunk 2077, you can get the game id one steam game store url or from [SteamDB](https://steamdb.info/apps/)..
+`292030` is The Witcher 3, and `1091500` is Cyberpunk 2077, you can get the game id on steam game store url or from [SteamDB](https://steamdb.info/apps/)..
 
 # Run
 
