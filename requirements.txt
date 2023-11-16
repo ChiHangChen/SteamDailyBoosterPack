@@ -1,2 +1,2 @@
-steam==1.2.0
+steam==1.4.4
 steamfront==0.1.0
