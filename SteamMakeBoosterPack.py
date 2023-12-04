@@ -1,7 +1,8 @@
 import configparser
 import os
 import sys
-import steam
+# import steam
+from copy import deepcopy
 import steam.webauth
 import steamfront
 import json
@@ -111,7 +112,13 @@ class get_info():
                 "series": 1,
                 "tradability_preference" : 2
             }
+            headers = deepcopy(self.headers)
+            headers['Host'] = 'steamcommunity.com'
+            headers['Origin'] = 'https://steamcommunity.com/'
+            headers['Referer'] = 'https://steamcommunity.com/tradingcards/boostercreator/'
             response = self.account_session.post(self.make_url, headers=self.headers, data=params)
+            logging.warning(f"return text : {response.text}")
+            breakpoint()
             try:
                 goo_amount = int(re.search(r'"goo_amount":"([^"]+)"', response.text).group(1))
             except:
@@ -131,6 +138,7 @@ class get_info():
                         "tradability_preference" : 2
                     }
                     response = self.account_session.post(self.make_url, headers=self.headers, data=params)
+                    logging.warning(f"return text : {response.text}")
                     if response.text[2:18] != 'purchase_eresult':
                         logging.warning("Puchase booster pack SUCCESS on game : %s-%s" % (gi, self.client.getApp(appid=gi).name))
                         search_result = re.search(r'"communityitemid":"([^"]+)"', response.text)
