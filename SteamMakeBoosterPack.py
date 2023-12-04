@@ -78,6 +78,9 @@ class get_info():
                 "donotcache": int(time.time() * 100000),
             }
             resp = self.account_session.post('https://steamcommunity.com/login/dologin/', data=data, timeout=15)
+            if resp.json() is None or resp.json()['success'] is not True:
+                logging.error(f"Login failed with resp: {resp.text}, please check account info or authenticator code.")
+                sys.exit(1)
             logging.warning(f"Login response: {resp.json()}")
             domains = ['store.steampowered.com', 'help.steampowered.com', 'steamcommunity.com']
             for cookie in list(self.account_session.cookies):
@@ -116,7 +119,7 @@ class get_info():
             logging.warning(f"Steam gems stock right now : {goo_amount}")
             if goo_amount <= 1000:
                 logging.warning("Steam gems stock low, please re-fill.")
-                logging.warning("Current time : {str(datetime.datetime.now())[:19]}")
+                logging.warning(f"Current time : {str(datetime.datetime.now())[:19]}")
                 time.sleep(60 * 60 * 12)
             else:
                 for gi in self.game_id:
